@@ -1,4 +1,4 @@
-var APP_NAME = "app_name",
+var APP_NAME = "handshake-js_test",
     ROOT_URL = "http://handshakejs-api.herokuapp.com";
 
 describe("Handshakejs", function() {
@@ -12,4 +12,13 @@ describe("Handshakejs", function() {
       expect(Handshakejs.getRootUrl()).to.equal(ROOT_URL);
     });
   });
+
+  describe("login.request", function() {
+    it("can make a login.request", function() {
+      Handshakejs.setAppName(APP_NAME);
+      console.log(Handshakejs.getAppName());
+      Handshakejs.setRootUrl(ROOT_URL);
+      Handshakejs.login.request();
+    });
+  })
 });
