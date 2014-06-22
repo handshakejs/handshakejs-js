@@ -1,5 +1,5 @@
 var APP_NAME = "handshake-js_test",
-    ROOT_URL = "http://handshakejs-api.herokuapp.com",
+    ROOT_URL = "https://handshakejs-api.herokuapp.com",
     EMAIL = "handshake-js_test@mailinator.com",
     AUTHCODE = "1234";
 
@@ -31,6 +31,8 @@ describe("Handshakejs", function() {
 
   describe("login.confirm", function() {
     it("can make an invalid login.confirm", function(done) {
+      Handshakejs.setAppName(APP_NAME);
+      Handshakejs.setRootUrl(ROOT_URL);
       Handshakejs.login.confirm({authcode: AUTHCODE, email: EMAIL}, function(err, res) {
         expect(err).to.not.equal("the authcode was incorrect");
         expect(res.errors[0].field).to.equal("authcode");
