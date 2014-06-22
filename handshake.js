@@ -2,11 +2,36 @@
 
   function handshakejsSdk( $ ) {
     var app_name,
-        root_url,
-        processing;
+        root_url;
 
 
-    function _sendRequest ( endpoint, data ) {
+    function _sendRequest ( endpoint, data, callback ) {
+      return $.ajax({
+        crossDomain : true,
+        url : root_url + endpoint,
+        data : data,
+        type : "POST",
+        success : function ( res, statuscode ) {
+          callback(null, res);
+        },
+        error : function ( xhr, statuscode ) {
+          var res = xhr.responseJSON;
+          var msg = res.errors[0].message;
+          var err = new Error(msg);
+          callback(err, res);
+        }
+      });
+    }
+
+    function _setCall ( endpoint ) {
+      return function ( values, callback ) {
+        values = typeof values !== 'undefined' ? values : {};
+        values.app_name = app_name;
+
+        _sendRequest( endpoint, values, function( err, res ) {
+          callback( err, res );
+        });
+      }
     }
 
     return {
@@ -23,31 +48,8 @@
         return root_url;
       },
       login: {
-        request: function () {
-          console.log(app_name);
-          if ( !app_name ){
-            return console.warn('Please specify an app_name.');
-          }
-          if ( !root_url ){ 
-            return console.warn('Please specify a root_url.');
-          }
-
-          $.ajax({
-            url : root_url + "/api/v1/login/request.json",
-            data : {email: "scott@scottmotte.com", app_name: app_name},
-            type : "post",
-            success : function ( res, statuscode ) {
-              console.log(statuscode);
-              console.log(res);
-              processing = true;
-              return res;
-            },
-            error : function ( err ) {
-              processing = false;
-              return err;
-            }
-          })
-        } 
+        request: _setCall('/api/v1/login/request.json'),
+        confirm: _setCall('/api/v1/login/confirm.json')
       }
     }
   }
