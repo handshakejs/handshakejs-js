@@ -12,6 +12,8 @@ Handshakejs.login.request({email: 'your@email.com', function(err, res) {
 });
 ```
 
+This library is part of the larger [Handshake.js ecosystem](https://github.com/handshakejs).
+
 ## Usage
 
 ### Handshakejs.setAppName(app_name)
