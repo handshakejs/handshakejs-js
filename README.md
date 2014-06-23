@@ -1,6 +1,6 @@
-# handshakejs -js
+# handshake.js
 
-Handshakejs-js makes it easy to log your users into your application without using a password.
+[Handshake.js](https://raw.githubusercontent.com/handshakejs/handshakejs-js/master/handshake.js) makes it easy to log your users into your application without using a password.
 
 ```javascript
 Handshakejs.setAppName('handshake-js_test');
